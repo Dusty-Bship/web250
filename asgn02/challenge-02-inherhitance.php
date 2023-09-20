@@ -124,7 +124,7 @@ $characters = [$ranged, $melee, $magic];
 foreach ($characters as $character) {
     echo "Name: " . $character->name . "</br>";
     echo "Base Damage: " . $character->baseDamage . "</br>";
-    echo "Bonus Damage: " . $character->bonusDamage . "</br>";
+    echo "Bonus Damage: :" . $character->getMainStat() . "</br>";
     echo "Base Health: " . $character->baseHealth . "</br>";
     echo "Agility: " . $character->agility . "</br>";
     echo "Intelligence: " . $character->intelligence . "</br>";
