@@ -16,7 +16,7 @@ class Bicycle {
 
   //methods
   public function name() {
-    return $this->year . ' ' . $this->brand . ' ' . $this->model . ' ' . $this->category;
+    return $this->year . ' ' . $this->brand . ' ' . $this->model . ' ' . $this->category . '</br> ' . $this->description;
   } 
 
   public function weight_lbs() {
