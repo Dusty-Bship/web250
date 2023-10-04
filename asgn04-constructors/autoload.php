@@ -7,8 +7,7 @@ function my_autoload($class) {
 }
  
 spl_autoload_register('my_autoload');
-
- $flyCatcher = new Bird(['commonName'=>'Acadian Flycatcher', 'latinName'=>'Empidonax virescens']);
+$flyCatcher = new Bird(['commonName'=>'Acadian Flycatcher', 'latinName'=>'Empidonax virescens']);
 echo $flyCatcher->commonName . "</br>";
 echo $flyCatcher->latinName;
 
