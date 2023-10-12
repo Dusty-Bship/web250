@@ -23,10 +23,9 @@
   $bird_array = $parser->parse();
   //var_dump($bird_array); exit;
 
-  foreach($bird_array as $args[]) {
+  foreach($bird_array as $args) {
   $bird = new Bird($args);
-  var_dump($bird); exit;
-?>
+  //var_dump($bird); exit; ?>
   <tr>
     <td><?php echo h($bird->common_name) ?></td>
     <td><?php echo h($bird->habitat) ?></td>
@@ -36,12 +35,7 @@
     <td><?php echo h($bird->conservation()) ?></td>
     <td><?php echo h($bird->backyard_tips) ?></td>
   </tr>
-  <?php
-}
-
-?>
-
+  <?php } ?>
 </table>
-
 
 <?php include(SHARED_PATH . '/public_footer.php'); ?>
