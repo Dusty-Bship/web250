@@ -14,7 +14,7 @@
   }
 
   function db_disconnect($connect) {
-    if(isset($connectiong)) {
+    if(isset($connection)) {
       $connect->close();
     }
   }
