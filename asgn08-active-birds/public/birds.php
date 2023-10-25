@@ -20,13 +20,11 @@
       </tr>
 
 <?php
-
-  $parser = new ParseCSV(PRIVATE_PATH . '/wnc-birds.csv');
-  $bird_array = $parser->parse();
-
-  foreach($bird_array as $args) { 
-  $bird = new Bird($args);
-  ?>
+  $birds = Bird::find_all();
+?>
+<?php 
+  foreach($birds as $bird) { 
+?>
       <tr>
         <td><?php echo h($bird->common_name); ?></td>
         <td><?php echo h($bird->habitat); ?></td>

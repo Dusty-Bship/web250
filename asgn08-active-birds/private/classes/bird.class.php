@@ -2,6 +2,51 @@
 
 class Bird {
 
+  static protected $database;
+
+  static public function set_database($database) {
+    self::$database = $database;
+  }
+
+  static public function find_by_sql($sql) {
+    $result = self::$database->query($sql);
+    if(!$result)
+      exit ("Database query failed");
+
+    $object_array = [];
+    While($record = $result->fetch_assoc()) {
+      $object_array[] = self::instantiate($record);
+    }
+    $result->free();
+    return $object_array;
+  }
+
+  static public function find_all() {
+    $sql = 'SELECT * FROM birds';
+    return self::find_by_sql($sql);
+  }
+
+  static public function find_by_id($id) {
+    $sql = "SELECT * FROM birds";
+    $sql .= "WHERE ID='" . self::$database->escape_string($id) . "'";
+    $obj_array = self::find_by_sql($sql);
+    if(!empty($obj_array))
+      return array_shift($obj_array);
+    else
+      return false;
+  }
+
+  static protected function instantiate($record) {
+    $object = new self;
+    foreach($record as $property => $value) {
+      if(property_exists($object, $property)) {
+        $object->$property = $value;
+      }
+    }
+    return $object;
+  }
+
+  public $id;
   public $common_name;
   public $habitat;
   public $food;
@@ -9,8 +54,6 @@ class Bird {
   public $behavior;
   public $conservation_id;
   public $backyard_tips;
- 
-
   protected const CONSERVATION_OPTIONS = [
     1 => 'Low concern',
     2 => 'Moderate concern',
@@ -20,13 +63,13 @@ class Bird {
 
  
   public function __construct($args=[]) {
-    $this->common_name = $args['common_name'] ?? '';
-    $this->habitat = $args['habitat'] ?? '';
-    $this->food = $args['food'] ?? '';
-    $this->nest_placement = $args['nest_placement'] ?? '';
-    $this->behavior = $args['behavior'] ?? '';
-    $this->conservation_id = $args['conservation_id'] ?? '';
-    $this->backyard_tips = $args['backyard_tips'] ?? '';
+    $this->common_name = $args['common_name'] ?? NULL;
+    $this->habitat = $args['habitat'] ?? NULL;
+    $this->food = $args['food'] ?? NULL;
+    $this->nest_placement = $args['nest_placement'] ?? NULL;
+    $this->behavior = $args['behavior'] ?? NULL;
+    $this->conservation_id = $args['conservation_id'] ?? NULL;
+    $this->backyard_tips = $args['backyard_tips'] ?? NULL;
   }
 
   
