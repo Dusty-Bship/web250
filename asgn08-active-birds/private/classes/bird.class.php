@@ -27,7 +27,7 @@ class Bird {
   }
 
   static public function find_by_id($id) {
-    $sql = "SELECT * FROM birds";
+    $sql = "SELECT * FROM birds ";
     $sql .= "WHERE ID='" . self::$database->escape_string($id) . "'";
     $obj_array = self::find_by_sql($sql);
     if(!empty($obj_array))
@@ -50,8 +50,6 @@ class Bird {
   public $common_name;
   public $habitat;
   public $food;
-  public $nest_placement;
-  public $behavior;
   public $conservation_id;
   public $backyard_tips;
   protected const CONSERVATION_OPTIONS = [
@@ -66,8 +64,6 @@ class Bird {
     $this->common_name = $args['common_name'] ?? NULL;
     $this->habitat = $args['habitat'] ?? NULL;
     $this->food = $args['food'] ?? NULL;
-    $this->nest_placement = $args['nest_placement'] ?? NULL;
-    $this->behavior = $args['behavior'] ?? NULL;
     $this->conservation_id = $args['conservation_id'] ?? NULL;
     $this->backyard_tips = $args['backyard_tips'] ?? NULL;
   }
