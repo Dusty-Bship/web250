@@ -6,8 +6,8 @@
 // 3. Unique credentials if working with multiple developers
 
 define("DB_SERVER", "localhost");
-define("DB_USER", "sabirdsUser");
-define("DB_PASS", "Potato123");
-define("DB_NAME", "chain_gang");
+define("DB_USER", "");
+define("DB_PASS", "");
+define("DB_NAME", "");
 
 ?>
