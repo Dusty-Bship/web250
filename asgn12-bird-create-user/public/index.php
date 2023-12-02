@@ -5,6 +5,7 @@
 
   <ul>
     <li><a href="<?php echo url_for('/birds.php'); ?>">View Our list of birds.</a></li>
+    <li><a href="<?php echo url_for('/birds.php'); ?>">View Our list of birds.</a></li>
     <li><a href="<?php echo url_for('/about.php'); ?>">About Us</a></li>
   </ul>
     
