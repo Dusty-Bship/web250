@@ -1,5 +1,6 @@
 <?php
-require_once('../private/initialize.php');
+require_once('../../../private/initialize.php');
+require_login();
 $page_title = 'Delete A Bird';
 include(SHARED_PATH . '/public_header.php');
 ?>

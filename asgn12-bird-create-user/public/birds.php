@@ -7,7 +7,9 @@
 <h2>Bird inventory</h2>
 <p>This is a short list -- start your birding!</p>
 
-<a href="new.php">Add Bird</a>
+<a href="../public/members/logout.php">Click here to logout</a><br>
+<br>
+<a href="../public/members/birds/new.php">Click here to Add A Bird</a>
     <table border="1">
       <tr>
         <th>Name</th>
