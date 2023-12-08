@@ -2,8 +2,8 @@
 
 class Bird extends DatabaseObject {
 
-  static public $table_name = 'birds';
-  static public $db_columns = ['id', 'common_name', 'habitat', 'food', 'conservation_id', 'backyard_tips'];
+  static protected $table_name = 'birds';
+  static protected $db_columns = ['id', 'common_name', 'habitat', 'food', 'conservation_id', 'backyard_tips'];
 
   public $id;
   public $common_name;
@@ -21,11 +21,13 @@ class Bird extends DatabaseObject {
 
  
   public function __construct($args=[]) {
-    $this->common_name = $args['common_name'] ?? 'Peregrine Falcon';
-    $this->habitat = $args['habitat'] ?? 'Mountain regions';
-    $this->food = $args['food'] ?? 'Seeds';
-    $this->conservation_id = $args['conservation_id'] ?? '1';
-    $this->backyard_tips = $args['backyard_tips'] ?? 'Grow native plants to provide natural food sources';
+    $this->common_name = $args['common_name'] ?? '';
+    $this->habitat = $args['habitat'] ?? '';
+    $this->food = $args['food'] ?? '';
+    $this->nest_placement = $args['nest_placement'] ?? '';
+    $this->behavior = $args['behavior'] ?? '';
+    $this->conservation_id = $args['conservation_id'] ?? '';
+    $this->backyard_tips = $args['backyard_tips'] ?? '';
   }
 
   
@@ -38,16 +40,17 @@ class Bird extends DatabaseObject {
   }
 
 
-  public function validate() {
+  protected function validate() {
     $this->errors = [];
 
     if(is_blank($this->common_name)) {
       $this->errors[] = "Bird name cannot be blank.";
     }
-    if(is_blank($this->habitat))
-        $this->errors[] = "Habitat cannot be blank.";
+   
     return $this->errors;
   }
+
+
 }
 
 ?>

@@ -4,8 +4,17 @@
 
 
   <ul>
-    <li><a href="<?php echo url_for('/members/login.php'); ?>">Members Login.</a></li>
+    <li><a href="<?php echo url_for('/birds.php'); ?>">View Birds</a></li>
+
+    <?php if($session->is_admin_logged_in()) { ?>
+
+      <li><a href="<?php echo url_for('members/index.php'); ?>">View Members</a></li> 
+
+    <?php } ?>
+
     <li><a href="<?php echo url_for('/about.php'); ?>">About Us</a></li>
+    <li><a href="<?php echo url_for('/signup.php'); ?>">Sign Up</a></li>
+
   </ul>
     
 

@@ -1,15 +1,16 @@
 <?php
 
-class Members extends DatabaseObject {
+class Member extends DatabaseObject {
 
   static protected $table_name = "users";
-  static protected $db_columns = ['id', 'first_name', 'last_name', 'email', 'username', 'hashed_password'];
+  static protected $db_columns = ['id', 'first_name', 'last_name', 'email', 'username', 'user_level', 'hashed_password'];
 
   public $id;
   public $first_name;
   public $last_name;
   public $email;
   public $username;
+  public $user_level;
   protected $hashed_password;
   public $password;
   public $confirm_password;
@@ -20,6 +21,7 @@ class Members extends DatabaseObject {
     $this->last_name = $args['last_name'] ?? '';
     $this->email = $args['email'] ?? '';
     $this->username = $args['username'] ?? '';
+    $this->user_level = $args['user_level'] ?? '';
     $this->password = $args['password'] ?? '';
     $this->confirm_password = $args['confirm_password'] ?? '';
   }
@@ -28,7 +30,7 @@ class Members extends DatabaseObject {
     return $this->first_name . " " . $this->last_name;
   }
 
-  protected function set_hashed_password() {
+  public function set_hashed_password() {
     $this->hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
   }
 
@@ -40,30 +42,32 @@ class Members extends DatabaseObject {
     $this->set_hashed_password();
     return parent::create();
   }
-  
+
   protected function update() {
-    if($this->password != '')
+    if($this->password != '') {
       $this->set_hashed_password();
-    else
-      $password_required = false;
+      // validate password
+    } else {
+      $this->password_required = false;
+    }
     return parent::update();
   }
 
   protected function validate() {
     $this->errors = [];
-    
+  
     if(is_blank($this->first_name)) {
       $this->errors[] = "First name cannot be blank.";
     } elseif (!has_length($this->first_name, array('min' => 2, 'max' => 255))) {
       $this->errors[] = "First name must be between 2 and 255 characters.";
     }
-    
+  
     if(is_blank($this->last_name)) {
       $this->errors[] = "Last name cannot be blank.";
     } elseif (!has_length($this->last_name, array('min' => 2, 'max' => 255))) {
       $this->errors[] = "Last name must be between 2 and 255 characters.";
     }
-    
+  
     if(is_blank($this->email)) {
       $this->errors[] = "Email cannot be blank.";
     } elseif (!has_length($this->email, array('max' => 255))) {
@@ -71,16 +75,15 @@ class Members extends DatabaseObject {
     } elseif (!has_valid_email_format($this->email)) {
       $this->errors[] = "Email must be a valid format.";
     }
-    
+  
     if(is_blank($this->username)) {
       $this->errors[] = "Username cannot be blank.";
     } elseif (!has_length($this->username, array('min' => 8, 'max' => 255))) {
       $this->errors[] = "Username must be between 8 and 255 characters.";
+    } elseif (!has_unique_username($this->username, $this->id ?? 0)) {
+      $this->errors[] = "Username must be unique, try another.";
     }
-    elseif(!has_unique_username($this->username, $this->id ?? 0)) {
-      $this->errors[] = "Username is already taken. Try another.";
-    }
-    
+  
     if($this->password_required) {
       if(is_blank($this->password)) {
         $this->errors[] = "Password cannot be blank.";
@@ -95,26 +98,36 @@ class Members extends DatabaseObject {
       } elseif (!preg_match('/[^A-Za-z0-9\s]/', $this->password)) {
         $this->errors[] = "Password must contain at least 1 symbol";
       }
-      
+    
       if(is_blank($this->confirm_password)) {
         $this->errors[] = "Confirm password cannot be blank.";
       } elseif ($this->password !== $this->confirm_password) {
         $this->errors[] = "Password and confirm password must match.";
       }
+
+      
+
+
     }
+    
+    if($this->user_level !== "a" &&        $this->user_level !== "m"){
+      $this->errors[] = "Invalid User Level.";
+    }
+  
     return $this->errors;
   }
-  
+
   static public function find_by_username($username) {
     $sql = "SELECT * FROM " . static::$table_name . " ";
     $sql .= "WHERE username='" . self::$database->escape_string($username) . "'";
-    $obj_array =  static::find_by_sql($sql);
-    if(!empty($obj_array))
+    $obj_array = static::find_by_sql($sql);
+    if(!empty($obj_array)) {
       return array_shift($obj_array);
-    else
+    } else {
       return false;
+    }
   }
+
 }
-?>
-}
+
 ?>

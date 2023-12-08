@@ -7,9 +7,6 @@
 <h2>Bird inventory</h2>
 <p>This is a short list -- start your birding!</p>
 
-<a href="../public/members/logout.php">Click here to logout</a><br>
-<br>
-<a href="../public/members/birds/new.php">Click here to Add A Bird</a>
     <table border="1">
       <tr>
         <th>Name</th>
@@ -30,13 +27,8 @@
         <td><?php echo h($bird->conservation()); ?></td>
         <td><?php echo h($bird->backyard_tips); ?></td>
         <td><a href="detail.php?id=<?php echo $bird->id; ?>">View</a></td>
-        <td><a href="edit.php?id=<?php echo $bird->id; ?>">Edit</a></td>
-        <td><a href=<?php echo url_for('delete.php?id=' . h(u($bird->id))); ?>">Delete</a></td>
-
       </tr>
       <?php } ?>
-
     </table>
-
 
 <?php include(SHARED_PATH . '/public_footer.php'); ?>

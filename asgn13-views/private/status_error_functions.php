@@ -3,9 +3,19 @@
 function require_login() {
   global $session;
   if(!$session->is_logged_in()) {
-    redirect_to(url_for('/members/login.php'));
+    $session->message('You must be logged in to view this page.');
+    redirect_to(url_for(('/login.php')));
   }
 }
+
+function require_admin_login() {
+  global $session;
+  if(!$session->is_admin_logged_in()) {
+    $session->message('This page requires admin access.');
+    redirect_to(url_for(('/login.php')));
+  }
+}
+
 
 function display_errors($errors=array()) {
   $output = '';
